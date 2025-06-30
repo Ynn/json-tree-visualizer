@@ -616,7 +616,7 @@
                         
                         <!-- Instructions -->
                         <div style="position: absolute; bottom: 10px; left: 10px; z-index: 100; background: rgba(0,0,0,0.7); color: white; padding: 8px 12px; border-radius: 15px; font-size: 11px;">
-                            🖱️ Glissez pour naviguer • 🖱️ Molette pour zoomer
+                            🖱️ Drag to pan • 🖱️ Scroll to zoom
                         </div>
                         
                         <!-- SVG Container -->
