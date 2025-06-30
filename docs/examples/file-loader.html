@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JSON Tree Visualizer - File Loader Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 0; }
+        .container { max-width: 800px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px; }
+        h1 { font-size: 2em; margin-bottom: 0.5em; }
+        .controls { margin-bottom: 24px; display: flex; gap: 16px; align-items: center; }
+        .output { margin-top: 32px; min-height: 200px; background: #f3f4f6; border-radius: 6px; padding: 24px; }
+        button { padding: 8px 18px; border: none; border-radius: 4px; background: #3b82f6; color: #fff; font-size: 1em; cursor: pointer; transition: background 0.2s; }
+        button:disabled { background: #a5b4fc; cursor: not-allowed; }
+        button.secondary { background: #64748b; }
+        input[type="file"] { display: none; }
+        label[for="file-input"] { background: #059669; color: #fff; padding: 8px 18px; border-radius: 4px; cursor: pointer; margin-right: 8px; }
+        .error { color: #dc2626; font-weight: bold; }
+        pre { background: #f8fafc; padding: 16px; border-radius: 4px; overflow-x: auto; font-size: 0.95em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JSON Tree Visualizer - File Loader</h1>
+        <div class="controls">
+            <label for="file-input">Choose JSON File</label>
+            <input type="file" id="file-input" accept="application/json,.json">
+            <button id="show-dot" disabled>Show DOT</button>
+            <button id="show-graph" disabled>Show Graph</button>
+        </div>
+        <div id="output" class="output">
+            <div style="color:#64748b;">No file loaded. Please select a JSON file.</div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/json-tree-visualizer@0.1.0/dist/json-tree-visualizer.min.js"></script>
+    <script>
+        let jsonData = null;
+        const fileInput = document.getElementById('file-input');
+        const showDotBtn = document.getElementById('show-dot');
+        const showGraphBtn = document.getElementById('show-graph');
+        const output = document.getElementById('output');
+        const fileLabel = document.querySelector('label[for="file-input"]');
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    jsonData = JSON.parse(evt.target.result);
+                    output.innerHTML = '<span style="color:#059669;">File loaded successfully!</span>';
+                    showDotBtn.disabled = false;
+                    showGraphBtn.disabled = false;
+                } catch (err) {
+                    output.innerHTML = '<span class="error">Invalid JSON file.</span>';
+                    showDotBtn.disabled = true;
+                    showGraphBtn.disabled = true;
+                    jsonData = null;
+                }
+            };
+            reader.onerror = function() {
+                output.innerHTML = '<span class="error">Error reading file.</span>';
+                showDotBtn.disabled = true;
+                showGraphBtn.disabled = true;
+                jsonData = null;
+            };
+            reader.readAsText(file);
+        });
+
+        showDotBtn.addEventListener('click', function() {
+            if (!jsonData) return;
+            try {
+                const dot = JSONTreeVisualizer.convertToDot(jsonData, { colorScheme: 'vibrant', maxArrayItems: 2000 });
+                output.innerHTML = '<h3>DOT Output</h3>' +
+                    '<button class="secondary" onclick="navigator.clipboard.writeText(document.getElementById(\'dot-pre\').textContent)">Copy DOT</button>' +
+                    '<pre id="dot-pre">' + dot + '</pre>';
+            } catch (err) {
+                output.innerHTML = '<span class="error">Error generating DOT: ' + err + '</span>';
+            }
+        });
+
+        showGraphBtn.addEventListener('click', async function() {
+            if (!jsonData) return;
+            output.innerHTML = '<span style="color:#64748b;">Rendering graph...</span>';
+            try {
+                const svg = await JSONTreeVisualizer.renderSVG(jsonData, { colorScheme: 'vibrant', maxArrayItems: 2000 });
+                output.innerHTML = svg;
+            } catch (err) {
+                output.innerHTML = '<span class="error">Error rendering graph: ' + err + '</span>';
+            }
+        });
+    </script>
+</body>
+</html>

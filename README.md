@@ -1,8 +1,8 @@
 # JSON Tree Visualizer
 
-Simple library for visualizing JSON data structures as interactive tree diagrams.
+Simple/Basic library for visualizing JSON data structures as non interactive tree diagrams (SVG).
 
-JSON -> DOT -> GraphViz
+JSON -> DOT -> GraphViz (using viz.js)
 
 ## Examples :
 
