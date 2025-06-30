@@ -1,6 +1,16 @@
 # JSON Tree Visualizer
 
-Standalone library for visualizing JSON data structures as interactive tree diagrams.
+Simple library for visualizing JSON data structures as interactive tree diagrams.
+
+JSON -> DOT -> GraphViz
+
+## Examples :
+
+Examples are in /docs/examples
+
++ [Simple with no widget](https://ynn.github.io/json-tree-visualizer/examples/simple.html)
++ [Simple Random](https://ynn.github.io/json-tree-visualizer/examples/big.html)
++ [Using widget](https://ynn.github.io/json-tree-visualizer/examples/widget.html)
 
 
 ## Quick Start
