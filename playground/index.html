@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Tree Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌳 JSON Tree Visualizer</h1>
+            <p>Interactive JSON data structure visualization</p>
+        </div>
+
+        <div class="controls">
+            <div class="control-row">
+                <span class="control-label">📄 Sample Data:</span>
+                <button class="btn btn-primary" onclick="loadPersonData()">
+                    👤 Person Profile
+                </button>
+                <button class="btn btn-primary" onclick="loadCompanyData()">
+                    🏢 Company Data
+                </button>
+                <button class="btn btn-primary" onclick="loadComplexData()">
+                    🔗 Complex Nested
+                </button>
+            </div>
+
+            <div class="control-row">
+                <span class="control-label">🎨 Appearance:</span>
+                <select class="select" id="colorScheme" onchange="updateColorScheme()">
+                    <option value="default">Default Colors</option>
+                    <option value="minimal">Minimal Gray</option>
+                    <option value="vibrant">Vibrant Colors</option>
+                </select>
+
+                <span class="control-label">📊 Limits:</span>
+                <select class="select" id="maxDepth" onchange="updateOptions()">
+                    <option value="5">5 Levels Deep</option>
+                    <option value="10" selected>10 Levels Deep</option>
+                    <option value="15">15 Levels Deep</option>
+                </select>
+
+                <select class="select" id="maxArrayItems" onchange="updateOptions()">
+                    <option value="3">3 Array Items</option>
+                    <option value="5" selected>5 Array Items</option>
+                    <option value="10">10 Array Items</option>
+                </select>
+            </div>
+
+            <div class="control-row">
+                <span class="control-label">🔧 Actions:</span>
+                <button class="btn btn-success" onclick="validateCurrentJSON()">
+                    ✅ Validate JSON
+                </button>
+                <button class="btn btn-warning" onclick="exportDOT()">
+                    💾 Export DOT
+                </button>
+            </div>
+
+            <div id="status"></div>
+        </div>
+
+        <div class="main-content">
+            <div class="visualizer-container">
+                <div id="json-visualizer"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>
+                <strong>JSON Tree Visualizer</strong> | 
+                <a href="https://github.com/yourusername/json-tree-visualizer" target="_blank">GitHub</a> | 
+                <a href="#" onclick="downloadLibrary()">Download Library</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="../src/json-tree-visualizer.js"></script>
+    <script src="playground.js"></script>
+</body>
+</html>

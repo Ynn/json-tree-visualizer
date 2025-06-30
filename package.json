@@ -1,0 +1,40 @@
+{
+  "name": "json-tree-visualizer",
+  "version": "0.1.0",
+  "description": "Zero-dependency JSON tree visualizer that works in any browser",
+  "main": "dist/json-tree-visualizer.js",
+  "module": "dist/json-tree-visualizer.esm.js",
+  "unpkg": "dist/json-tree-visualizer.min.js",
+  "jsdelivr": "dist/json-tree-visualizer.min.js",
+  "exports": {
+    "import": "./dist/json-tree-visualizer.esm.js",
+    "require": "./dist/json-tree-visualizer.js",
+    "default": "./dist/json-tree-visualizer.min.js"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "npx http-server . -p 5173 -c-1 --cors",
+    "build": "mkdir -p dist && npx esbuild src/json-tree-visualizer.js --bundle --minify --outfile=dist/json-tree-visualizer.min.js --format=iife --global-name=JSONTreeVisualizer && cp src/json-tree-visualizer.js dist/json-tree-visualizer.js && npx esbuild src/json-tree-visualizer.js --bundle --minify --outfile=dist/json-tree-visualizer.esm.js --format=esm"
+  },
+  "keywords": [
+    "json", "tree", "visualizer", "standalone", "graphviz", "dot", "visualization", "data-structure", "browser"
+  ],
+  "author": "JSON Tree Visualizer Contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/ynn/jtv",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ynn/jtv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ynn/jtv/issues"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "esbuild": "^0.20.0"
+  }
+}
