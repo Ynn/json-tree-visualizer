@@ -25,13 +25,13 @@
   ],
   "author": "JSON Tree Visualizer Contributors",
   "license": "MIT",
-  "homepage": "https://github.com/ynn/jtv",
+  "homepage": "https://github.com/Ynn/json-tree-visualizer",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ynn/jtv.git"
+    "url": "https://github.com/Ynn/json-tree-visualizer.git"
   },
   "bugs": {
-    "url": "https://github.com/ynn/jtv/issues"
+    "url": "https://github.com/Ynn/json-tree-visualizer/issues"
   },
   "devDependencies": {
     "http-server": "^14.1.1",
