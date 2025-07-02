@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - v0.1.2
   workflow_dispatch:
 
 jobs:
@@ -27,16 +26,6 @@ jobs:
 
       - name: Copy minified lib to docs
         run: cp dist/json-tree-visualizer.min.js docs/
-
-      - name: Commit and push changes to docs
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add docs/json-tree-visualizer.min.js
-          git commit -m 'chore: update minified lib for docs [skip ci]' || echo 'No changes to commit'
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
