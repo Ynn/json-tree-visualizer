@@ -116,7 +116,11 @@ function createWidgetWithOptions(opts = {}) {
   const colorScheme = document.getElementById('colorScheme')?.value || 'default';
   const maxDepth = parseInt(document.getElementById('maxDepth')?.value) || 1000;
   const maxArrayItems = parseInt(document.getElementById('maxArrayItems')?.value) || 1000;
-  document.getElementById('json-visualizer').innerHTML = '';
+  console.log('[playground] Options utilisées:', { colorScheme, maxDepth, maxArrayItems, opts });
+  // Remplacement du container pour éviter le bug Shadow DOM
+  const container = document.getElementById('json-visualizer');
+  const newContainer = container.cloneNode(false);
+  container.parentNode.replaceChild(newContainer, container);
   currentWidget = JSONTreeVisualizer.createWidget('json-visualizer', {
     showInput: true,
     showControls: true,
@@ -169,9 +173,14 @@ function handleFileInput(event) {
 }
 
 function updateColorScheme() {
+  console.log('[playground] Changement colorScheme:', document.getElementById('colorScheme')?.value);
   recreateWidget();
 }
 function updateOptions() {
+  console.log('[playground] Changement options:', {
+    maxDepth: document.getElementById('maxDepth')?.value,
+    maxArrayItems: document.getElementById('maxArrayItems')?.value
+  });
   recreateWidget();
 }
 function recreateWidget() {

@@ -154,10 +154,14 @@ export class JSONToDotConverter {
     arrayIndex,
     propertyName,
   ) {
+    let arrayLabel = `Array(${data.length})`;
+    if (propertyName) {
+      arrayLabel = `${this.escapeLabel(propertyName)}: ${arrayLabel}`;
+    }
     const containerNode = {
       id: nodeId,
-      label: `Array(${data.length})`,
-      shape: "box",
+      label: arrayLabel,
+      shape: "folder",
       color: this.colorScheme.getArrayColor(),
       style: "filled",
     };
@@ -193,7 +197,7 @@ export class JSONToDotConverter {
         label: this.escapeLabel(
           `... and ${data.length - itemsToProcess} more items`,
         ),
-        shape: "ellipse",
+        shape: "note",
         color: this.colorScheme.getTruncationColor(),
         style: "filled",
       });
@@ -221,7 +225,7 @@ export class JSONToDotConverter {
     const node = {
       id: nodeId,
       label: this.escapeLabel(displayValue),
-      shape: "ellipse",
+      shape: "note",
       color: this.colorScheme.getPrimitiveColor(data),
       style: "filled",
     };
@@ -260,7 +264,7 @@ export class JSONToDotConverter {
     return {
       id: nodeId,
       label: this.escapeLabel("... (truncated)"),
-      shape: "ellipse",
+      shape: "note",
       color: this.colorScheme.getTruncationColor(),
       style: "filled",
     };
@@ -294,6 +298,7 @@ export class JSONToDotConverter {
     const parts = [
       "digraph JSONTree {",
       "  rankdir=TB;",
+      "  splines=polyline;",
       '  node [fontname="Arial", fontsize=10, margin=0.2];',
       '  edge [fontname="Arial", fontsize=8, arrowsize=0.7];',
       '  bgcolor="transparent";',
