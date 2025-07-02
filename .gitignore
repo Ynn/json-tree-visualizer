@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Fichiers générés par le build
+dist/
+docs/json-tree-visualizer.min.js
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -37,25 +37,6 @@ export class ColorScheme {
 
     getObjectColor(data) {
         const keys = Object.keys(data);
-        const keySet = new Set(keys);
-
-        if (this.hasKeys(keySet, ['name', 'age']) || 
-            this.hasKeys(keySet, ['first_name', 'last_name'])) {
-            return this.palette.person;
-        }
-
-        if (this.hasKeys(keySet, ['street', 'city']) ||
-            this.hasKeys(keySet, ['address']) ||
-            this.hasKeys(keySet, ['street_address', 'city'])) {
-            return this.palette.address;
-        }
-
-        if (this.hasKeys(keySet, ['type', 'value']) ||
-            this.hasKeys(keySet, ['email']) ||
-            this.hasKeys(keySet, ['phone'])) {
-            return this.palette.contact;
-        }
-
         if (keys.length <= 2) return this.palette.simple;
         if (keys.length <= 5) return this.palette.object;
         return this.palette.complex;

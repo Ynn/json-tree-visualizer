@@ -1,7 +1,6 @@
 /**
  * JSON Tree Visualizer - Interactive Playground
- * Clean, production-ready demo functions
- */
+*/
 
 // Global state
 let currentWidget = null;
