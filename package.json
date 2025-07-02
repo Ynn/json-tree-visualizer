@@ -18,7 +18,8 @@
   ],
   "scripts": {
     "dev": "npx http-server . -p 5173 -c-1 --cors",
-    "build": "mkdir -p dist && npx esbuild src/json-tree-visualizer.js --bundle --minify --outfile=dist/json-tree-visualizer.min.js --format=iife --global-name=JSONTreeVisualizer && npx esbuild src/json-tree-visualizer.js --bundle --outfile=dist/json-tree-visualizer.js --format=iife --global-name=JSONTreeVisualizer && npx esbuild src/json-tree-visualizer.js --bundle --minify --outfile=dist/json-tree-visualizer.esm.js --format=esm && cp dist/json-tree-visualizer.min.js docs",
+    "format": "prettier --write \"src/**/*.js\" \"tests/**/*.js\" \"*.js\" \"*.json\"",
+    "build": "npm run format && mkdir -p dist && npx esbuild src/json-tree-visualizer.js --bundle --minify --outfile=dist/json-tree-visualizer.min.js --format=iife --global-name=JSONTreeVisualizer && npx esbuild src/json-tree-visualizer.js --bundle --outfile=dist/json-tree-visualizer.js --format=iife --global-name=JSONTreeVisualizer && npx esbuild src/json-tree-visualizer.js --bundle --minify --outfile=dist/json-tree-visualizer.esm.js --format=esm && cp dist/json-tree-visualizer.min.js docs",
     "test": "vitest run"
   },
   "keywords": [
@@ -46,7 +47,8 @@
     "esbuild": "^0.20.0",
     "http-server": "^14.1.1",
     "jsdom": "^26.1.0",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "prettier": "^3.2.5"
   },
   "dependencies": {
     "@viz-js/viz": "^3.14.0"
