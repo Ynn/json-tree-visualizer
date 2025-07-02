@@ -26,3 +26,11 @@ jobs:
 
       - name: Copy minified lib to docs
         run: cp dist/json-tree-visualizer.min.js docs/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
+          keep_files: true
