@@ -1,6 +1,6 @@
 {
   "name": "json-tree-visualizer",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Basic JSON tree visualizer that works in browser with graphviz (viz.js)",
   "main": "dist/json-tree-visualizer.js",
   "module": "dist/json-tree-visualizer.esm.js",
