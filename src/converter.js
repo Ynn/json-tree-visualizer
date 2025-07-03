@@ -37,6 +37,7 @@ export class JSONToDotConverter {
       depth,
       arrayIndex,
       propertyName,
+      isPrimitive,
     } = item;
     if (depth >= this.options.maxDepth) {
       nodes.push(this.createTruncatedNode(nodeId));
@@ -53,7 +54,18 @@ export class JSONToDotConverter {
       }
       return;
     }
-    if (this.isObject(data)) {
+    if (isPrimitive) {
+      this.processPrimitive(
+        data,
+        nodeId,
+        nodes,
+        edges,
+        parentId,
+        parentPort,
+        arrayIndex,
+        propertyName,
+      );
+    } else if (this.isObject(data)) {
       this.processObject(
         data,
         nodeId,
@@ -106,8 +118,10 @@ export class JSONToDotConverter {
   ) {
     const fields = [];
     const entries = Object.entries(data);
+    // Add an index to each port
+    let portIndex = 0;
     for (const [key, value] of entries) {
-      const sanitizedKey = this.sanitizePortName(key);
+      const sanitizedKey = this.sanitizePortName(key) + "_" + portIndex;
       if (this.isComplexValue(value)) {
         fields.push(
           `<${sanitizedKey}>${this.escapeLabel(key)}: ${this.getTypeLabel(value)}`,
@@ -127,6 +141,7 @@ export class JSONToDotConverter {
           `${this.escapeLabel(key)}: ${this.escapeLabel(displayValue)}`,
         );
       }
+      portIndex++;
     }
     const node = {
       id: nodeId,
@@ -170,25 +185,14 @@ export class JSONToDotConverter {
     for (let i = 0; i < itemsToProcess; i++) {
       const item = data[i];
       const childId = this.generateNodeId();
-      if (this.isComplexValue(item)) {
-        queue.push({
-          data: item,
-          nodeId: childId,
-          parentId: nodeId,
-          depth: depth + 1,
-          arrayIndex: i,
-        });
-      } else {
-        this.processPrimitive(
-          item,
-          childId,
-          nodes,
-          edges,
-          nodeId,
-          undefined,
-          i,
-        );
-      }
+      queue.push({
+        data: item,
+        nodeId: childId,
+        parentId: nodeId,
+        depth: depth + 1,
+        arrayIndex: i,
+        isPrimitive: !this.isComplexValue(item),
+      });
     }
     if (data.length > itemsToProcess) {
       const truncatedId = this.generateNodeId();

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JSON Tree Visualizer SVG Only Demo</title>
+</head>
+<body>
+    <div id="svg-result"></div>
+
+    <script src="../json-tree-visualizer.min.js"></script>
+    <script>
+        const myData = {"modules":[{"name":null,"items":[{"node":{"Declaration":[{"name":{"Var":"a"},"ty":null,"span":{"start":0,"end":5},"mutable":true,"constant":false},{"node":{"Number":{"I128":17389742392774276878}},"span":{"start":9,"end":49}}]},"span":{"start":0,"end":49}},{"node":{"Assignment":[{"Var":"a"},{"node":{"Number":{"Untyped":"4"}},"span":{"start":54,"end":55}}]},"span":{"start":50,"end":55}},{"node":{"Type":{"new_ty":{"node":{"Var":"Age"},"span":{"start":62,"end":65}},"inner_type":{"name":{"Var":"x"},"ty":"U8","span":{"start":69,"end":74},"mutable":false,"constant":false},"cond":{"node":{"Op":[{"node":{"Op":[{"node":{"Var":"x"},"span":{"start":81,"end":82}},"Lt",{"node":{"Number":{"Untyped":"30"}},"span":{"start":85,"end":87}}]},"span":{"start":81,"end":87}},"And",{"node":{"Op":[{"node":{"Var":"x"},"span":{"start":92,"end":93}},"GtEq",{"node":{"Number":{"Untyped":"9"}},"span":{"start":97,"end":98}}]},"span":{"start":92,"end":98}}]},"span":{"start":81,"end":98}}}},"span":{"start":57,"end":98}},{"node":{"Shadowing":[{"name":{"Var":"a"},"ty":{"Custom":"Age"},"span":{"start":99,"end":109},"mutable":true,"constant":false},{"node":{"Number":{"Untyped":"25"}},"span":{"start":114,"end":116}}]},"span":{"start":99,"end":116}},{"node":{"Declaration":[{"name":{"Var":"b"},"ty":{"Custom":"Age"},"span":{"start":117,"end":123},"mutable":false,"constant":false},{"node":{"Number":{"Untyped":"10"}},"span":{"start":126,"end":128}}]},"span":{"start":117,"end":128}},{"node":{"Shadowing":[{"name":{"Var":"a"},"ty":{"Custom":"Age"},"span":{"start":129,"end":135},"mutable":false,"constant":false},{"node":{"Number":{"Untyped":"8"}},"span":{"start":139,"end":140}}]},"span":{"start":129,"end":140}},{"node":{"Declaration":[{"name":{"Var":"h"},"ty":"U8","span":{"start":142,"end":146},"mutable":false,"constant":false},{"node":{"Number":{"Untyped":"200"}},"span":{"start":150,"end":153}}]},"span":{"start":142,"end":153}},{"node":{"FunctionDeclaration":{"name":"fib","args":[{"name":{"Var":"a"},"ty":"U8","span":{"start":163,"end":167},"mutable":false,"constant":false},{"name":{"Var":"b"},"ty":"U8","span":{"start":169,"end":174},"mutable":false,"constant":false}],"return_type":"Unit","code":{"node":{"Block":[{"node":{"Return":{"node":{"Op":[{"node":{"Var":"a"},"span":{"start":188,"end":189}},"Add",{"node":{"Var":"b"},"span":{"start":192,"end":193}}]},"span":{"start":188,"end":193}}},"span":{"start":181,"end":193}}]},"span":{"start":176,"end":193}}}},"span":{"start":156,"end":193}}]}]};
+        
+        JSONTreeVisualizer.renderSVG(myData, { colorScheme: 'vibrant',maxDepth: 30, maxArrayItems: 200 })
+            .then(svg => {
+                document.getElementById('svg-result').innerHTML = svg;
+            })
+            .catch(err => {
+                document.getElementById('svg-result').textContent = 'Erreur : ' + err;
+            });
+    </script>
+</body>
+</html>

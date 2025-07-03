@@ -1,6 +1,6 @@
 {
   "name": "json-tree-visualizer",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Zero-dependency JSON tree visualizer that works in any browser",
   "main": "dist/json-tree-visualizer.js",
   "module": "dist/json-tree-visualizer.esm.js",
