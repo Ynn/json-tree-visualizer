@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JSON Tree Visualizer Demo</title>
+</head>
+<body>
+    <h1>My JSON Data</h1>
+    <div id="json-tree" style="height: 600px;"></div>
+    
+    <script src="../json-tree-visualizer.min.js"></script>
+    <script>
+        const myData = {
+            user: {
+                name: "Alice Johnson",
+                email: "alice@example.com",
+                preferences: {
+                    theme: "dark",
+                    notifications: true
+                }
+            },
+            lastLogin: "2024-01-15T10:30:00Z"
+        };
+
+        JSONTreeVisualizer.createWidget('json-tree', {
+            initialJSON: myData,
+            colorScheme: 'vibrant'
+        });
+    </script>
+</body>
+</html>

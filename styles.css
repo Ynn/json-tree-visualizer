@@ -1,0 +1,215 @@
+/**
+ * Styles for JSON Tree Visualizer Demo
+ * Full width layout with fullscreen support
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+body {
+    min-height: 100vh;
+    height: 100vh;
+    padding: 0;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    background: white;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header.compact-header {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+    color: white;
+    padding: 10px 0 6px 0;
+    text-align: center;
+}
+.header.compact-header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 700;
+}
+
+.controls.compact-controls {
+    background: #f7fafc;
+    padding: 2px 0 2px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+.control-row {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-bottom: 2px;
+    flex-wrap: nowrap;
+    min-height: 28px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.control-row:last-child {
+    margin-bottom: 0;
+}
+.control-label {
+    font-weight: 600;
+    color: #2d3748;
+    min-width: 60px;
+    font-size: 12px;
+    line-height: 1.1;
+}
+.btn {
+    padding: 3px 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 24px;
+    min-width: 0;
+}
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+.btn-primary { background: #4299e1; color: white; }
+.btn-success { background: #48bb78; color: white; }
+.btn-warning { background: #ed8936; color: white; }
+.select {
+    padding: 2px 6px;
+    border: 2px solid #e2e8f0;
+    border-radius: 4px;
+    background: white;
+    font-size: 12px;
+    min-width: 40px;
+    max-width: 90px;
+    height: 24px;
+    box-sizing: border-box;
+}
+.select[type="number"] {
+    width: 60px;
+}
+.select:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.1);
+}
+.status {
+    padding: 7px 12px;
+    border-radius: 6px;
+    margin-top: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 18px;
+}
+.status.success {
+    background: #c6f6d5;
+    color: #22543d;
+    border: 1px solid #9ae6b4;
+}
+.status.error {
+    background: #fed7d7;
+    color: #742a2a;
+    border: 1px solid #feb2b2;
+}
+.main-content {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+    margin: 0;
+}
+.visualizer-container {
+    flex: 1;
+    background: #f8f9fa;
+    position: relative;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#json-visualizer {
+    flex: 1 1 0;
+    min-height: 0;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+.footer.compact-footer {
+    background: #2d3748;
+    color: white;
+    padding: 7px 0 5px 0;
+    text-align: center;
+    font-size: 13px;
+}
+.footer.compact-footer a {
+    color: #63b3ed;
+    text-decoration: none;
+}
+.footer.compact-footer a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 900px) {
+    .header.compact-header h1 {
+        font-size: 1.1rem;
+    }
+    .control-label {
+        font-size: 12px;
+    }
+    .btn, .select {
+        font-size: 12px;
+    }
+}
+@media (max-width: 600px) {
+    .container {
+        min-height: 100vh;
+    }
+    .main-content {
+        flex-direction: column;
+    }
+    .visualizer-container {
+        min-height: 200px;
+    }
+    .control-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+    .header.compact-header {
+        padding: 6px 0 3px 0;
+    }
+    .footer.compact-footer {
+        padding: 4px 0 2px 0;
+    }
+}

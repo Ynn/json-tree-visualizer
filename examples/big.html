@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JSON Tree Visualizer - Big Random JSON Demo</title>
+</head>
+<body>
+    <h1>Random Tree</h1>
+    <div id="svg-result"></div>
+
+    <script src="../json-tree-visualizer.min.js"></script>
+    <script>
+    function randomString(len) {
+        const chars = 'abcdefghijklmnopqrstuvwxyz';
+        let str = '';
+        for (let i = 0; i < len; i++) str += chars[Math.floor(Math.random() * chars.length)];
+        return str;
+    }
+    function randomValue(depth) {
+        if (depth <= 0) return Math.random() < 0.5 ? randomString(5) : Math.floor(Math.random()*1000);
+        const type = Math.random();
+        if (type < 0.3) {
+            // object
+            const obj = {};
+            const n = 2 + Math.floor(Math.random()*3);
+            for (let i = 0; i < n; i++) {
+                obj[randomString(4)] = randomValue(depth-1);
+            }
+            return obj;
+        } else if (type < 0.6) {
+            // array
+            const arr = [];
+            const n = 2 + Math.floor(Math.random()*4);
+            for (let i = 0; i < n; i++) arr.push(randomValue(depth-1));
+            return arr;
+        } else {
+            // primitive
+            return Math.random() < 0.5 ? randomString(8) : Math.floor(Math.random()*10000);
+        }
+    }
+    function generateBigJSON() {
+        return {
+            root: {"a": randomValue(4), "b": randomValue(3)},
+            meta: {
+                created: new Date().toISOString(),
+                id: Math.floor(Math.random()*1e6)
+            }
+        };
+    }
+    const bigData = generateBigJSON();
+    JSONTreeVisualizer.renderSVG(bigData, { colorScheme: 'vibrant',maxDepth: 30, maxArrayItems: 30 })
+        .then(svg => {
+            document.getElementById('svg-result').innerHTML = svg;
+        })
+        .catch(err => {
+            document.getElementById('svg-result').textContent = 'Erreur : ' + err;
+        });
+    </script>
+</body>
+</html>

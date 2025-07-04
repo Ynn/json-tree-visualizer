@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Tree Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header compact-header">
+            <h1>🌳 JSON Tree Visualizer</h1>
+        </div>
+
+        <div class="controls compact-controls">
+            <div class="control-row">
+                <span class="control-label">Sample data:</span>
+                <button class="btn btn-primary" onclick="loadPersonData()">Person</button>
+                <button class="btn btn-primary" onclick="loadCompanyData()">Company</button>
+                <button class="btn btn-primary" onclick="loadComplexData()">Complex</button>
+                <span class="control-label" style="margin-left:2em;">or load file:</span>
+                <input type="file" id="fileInput" accept="application/json,.json" style="padding:2px;">
+                <span class="control-label" style="margin-left:2em;">Color scheme:</span>
+                <select class="select" id="colorScheme" onchange="updateColorScheme()">
+                    <option value="default">Default</option>
+                    <option value="minimal">Minimal</option>
+                    <option value="vibrant">Vibrant</option>
+                </select>
+                <span class="control-label">Max depth:</span>
+                <input class="select" id="maxDepth" type="number" min="1" max="10000" value="1000" onchange="updateOptions()" style="width:90px;">
+                <span class="control-label">Max array items:</span>
+                <input class="select" id="maxArrayItems" type="number" min="1" max="10000" value="1000" onchange="updateOptions()" style="width:90px;">
+                <span class="control-label" style="margin-left:2em;">Actions:</span>
+                <button class="btn btn-success" onclick="validateCurrentJSON()">Validate JSON</button>
+                <button class="btn btn-warning" onclick="exportDOT()">Export DOT</button>
+                <button class="btn btn-info" onclick="shareCurrentJSON()">Share</button>
+            </div>
+            <div id="status"></div>
+        </div>
+
+        <div class="main-content" style="margin:0;">
+            <div class="visualizer-container" style="min-height:0;">
+                <div id="json-visualizer"></div>
+            </div>
+        </div>
+
+        <div class="footer compact-footer">
+            <span>JSON Tree Visualizer | <a href="https://github.com/ynn/json-tree-visualizer" target="_blank">GitHub</a></span>
+        </div>
+    </div>
+
+    <script src="json-tree-visualizer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
+    <script src="playground.js"></script>
+</body>
+</html>
