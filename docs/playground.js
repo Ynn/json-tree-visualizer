@@ -1,3 +1,37 @@
+// --- Génération du lien de partage ---
+function shareCurrentJSON() {
+  if (!currentWidget || typeof currentWidget.getJSON !== 'function') {
+    showStatus('Widget not ready', 'error');
+    return;
+  }
+  const dataToShare = currentWidget.getJSON();
+  if (!dataToShare) {
+    showStatus('No data to share', 'error');
+    return;
+  }
+  if (typeof pako === 'undefined') {
+    showStatus('pako (gzip) not loaded', 'error');
+    return;
+  }
+  try {
+    const jsonStr = JSON.stringify(dataToShare);
+    console.log('[share] JSON to share:', jsonStr);
+    const compressed = pako.gzip(jsonStr);
+    let binary = '';
+    for (let i = 0; i < compressed.length; i++) binary += String.fromCharCode(compressed[i]);
+    const base64 = btoa(binary);
+    const url = new URL(window.location.href);
+    url.searchParams.set('tree', base64);
+    navigator.clipboard.writeText(url.toString()).then(() => {
+      showStatus('Share link copied!', 'success');
+    }, () => {
+      window.prompt('Share link:', url.toString());
+      showStatus('Link generated', 'success');
+    });
+  } catch (e) {
+    showStatus('Error while sharing: ' + e.message, 'error');
+  }
+}
 
 // --- State ---
 let currentWidget = null;
@@ -243,8 +277,55 @@ function showStatus(message, type) {
   }, 4000);
 }
 
+// --- Décodage tree depuis l'URL ---
+function getURLParam(name) {
+  const url = new URL(window.location.href);
+  return url.searchParams.get(name);
+}
+
+function base64ToUint8Array(base64) {
+  let b64 = decodeURIComponent(base64.replace(/\s/g, ''));
+  b64 = b64.replace(/-/g, '+').replace(/_/g, '/');
+  while (b64.length % 4) b64 += '=';
+  const binary = atob(b64);
+  const len = binary.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
+
+function tryLoadTreeFromURL() {
+  const treeParam = getURLParam('tree');
+  console.log('[tree] Paramètre brut:', treeParam);
+  if (!treeParam) return false;
+  if (typeof pako === 'undefined') {
+    showStatus('pako (gzip) non chargé', 'error');
+    return false;
+  }
+  try {
+    const compressed = base64ToUint8Array(treeParam);
+    console.log('[tree] Après base64ToUint8Array, taille:', compressed.length, compressed);
+    const jsonStr = new TextDecoder('utf-8').decode(pako.ungzip(compressed));
+    console.log('[tree] Après ungzip:', jsonStr);
+    const json = JSON.parse(jsonStr);
+    console.log('[tree] Après JSON.parse:', json);
+    createWidgetWithOptions({ initialJSON: json });
+    currentData = json;
+    showStatus('JSON chargé depuis l’URL !', 'success');
+    return true;
+  } catch (e) {
+    console.error('[tree] Erreur décodage paramètre tree:', e);
+    showStatus('Erreur décodage paramètre tree: ' + e.message, 'error');
+    return false;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(initializeApp, 50);
+  setTimeout(() => {
+    if (!tryLoadTreeFromURL()) {
+      initializeApp();
+    }
+  }, 50);
   const fileInput = document.getElementById('fileInput');
   if (fileInput) fileInput.addEventListener('change', handleFileInput);
 });

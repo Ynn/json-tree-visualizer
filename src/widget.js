@@ -670,4 +670,12 @@ export class JSONTreeWidget {
   exportSVG() {
     return this.currentSVG;
   }
+
+  /**
+   * Returns the currently loaded/displayed JSON object in the widget.
+   * @returns {any} The current JSON object, or null if nothing is loaded.
+   */
+  getJSON() {
+    return this.currentData;
+  }
 }

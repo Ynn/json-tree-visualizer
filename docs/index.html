@@ -34,6 +34,7 @@
                 <span class="control-label" style="margin-left:2em;">Actions:</span>
                 <button class="btn btn-success" onclick="validateCurrentJSON()">Validate JSON</button>
                 <button class="btn btn-warning" onclick="exportDOT()">Export DOT</button>
+                <button class="btn btn-info" onclick="shareCurrentJSON()">Share</button>
             </div>
             <div id="status"></div>
         </div>
@@ -50,6 +51,7 @@
     </div>
 
     <script src="json-tree-visualizer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
     <script src="playground.js"></script>
 </body>
 </html>
