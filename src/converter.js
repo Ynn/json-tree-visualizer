@@ -124,7 +124,7 @@ export class JSONToDotConverter {
       const sanitizedKey = this.sanitizePortName(key) + "_" + portIndex;
       if (this.isComplexValue(value)) {
         fields.push(
-          `<${sanitizedKey}>${this.escapeLabel(key)}: ${this.getTypeLabel(value)}`,
+          `<${sanitizedKey}>${this.escapeLabel(key)} ${this.getTypeLabel(value)}`,
         );
         const childId = this.generateNodeId();
         queue.push({
@@ -169,14 +169,14 @@ export class JSONToDotConverter {
     arrayIndex,
     propertyName,
   ) {
-    let arrayLabel = `Array(${data.length})`;
+    let arrayLabel = ""; //`Array(${data.length})`;
     if (propertyName) {
       arrayLabel = `${this.escapeLabel(propertyName)}: ${arrayLabel}`;
     }
     const containerNode = {
       id: nodeId,
       label: arrayLabel,
-      shape: "folder",
+      shape: "point",
       color: this.colorScheme.getArrayColor(),
       style: "filled",
     };
@@ -250,9 +250,9 @@ export class JSONToDotConverter {
     return typeof value === "object" && value !== null;
   }
   getTypeLabel(value) {
-    if (Array.isArray(value)) return `Array(${value.length})`;
+    if (Array.isArray(value)) return `[${value.length}]`;
     if (value === null) return "null";
-    if (typeof value === "object") return "Object";
+    if (typeof value === "object") return "";
     return typeof value;
   }
   formatPrimitiveValue(value) {
